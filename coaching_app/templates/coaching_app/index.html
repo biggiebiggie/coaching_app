@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching || Frontpage</title>
+</head>
+
+<body>
+    <h1>This is my coaching platform</h1>
+    <div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'coaching_app:team_create' %}">Create a team</a></li>
+                <li><a href="{% url 'login_app:logout' %}">Logout</a></li>
+                <li><a href="{% url 'login_app:change_password' %}">Change password</a></li>
+            </ul>
+            <nav>
+    </div>
+    <h3>{{ user.username|title }} teams:</h3>
+    {% for team in my_teams %}
+    <div>
+        {{ team.name }}
+        {% comment %} <a href="{% url "coaching_app:team_view" %}">Go</a> {% endcomment %}
+        <form method="POST">
+            {% csrf_token %}
+            <input type="hidden" value="{{team.pk}}">
+            <button formaction="{% url 'coaching_app:team_view' team.pk %}">Go</button>
+        </form>
+
+    </div>
+    {% endfor %}
+
+</body>
+
+</html>

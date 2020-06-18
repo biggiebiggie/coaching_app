@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coaching || {{ team.name }}</title>
+</head>
+
+<body>
+    <h1>This team is : {{ team.name|title }}</h1>
+    <a href="{% url 'coaching_app:index' %}">Go to frontpage</a>
+    <form action="{% url 'coaching_app:team_settings' team.pk %}" method="POST">
+        {% csrf_token %}
+        <button>Settings</button>
+    </form>
+
+
+    <div>
+        <div>This is the coaches:</div>
+        {% for coach in coaches %}
+            <div>{{coach.user.username}}</div>
+        {% endfor %}
+    </div>
+    
+    <div>
+        <div>This is the students:</div>
+        {% for student in students %}
+            <div>{{student.user.username}}</div>
+        {% for tag in students_tag %}
+            <div>{{ tag.tagname }}</div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</body>
+
+</html>

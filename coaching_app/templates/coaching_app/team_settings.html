@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ team.name|title }}</title>
+</head>
+
+<body>
+    <h1>Settings for: {{ team.name|title }}</h1>
+
+    <div>Update the team name
+        <form action="{% url 'coaching_app:team_update' team.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="text" name="update" placeholder="New team name">
+            <button>Update</button>
+        </form>
+    </div>
+
+        <div>
+        <div>This is the students:</div>
+        {% for student in students %}
+        <div>
+            <form action="{% url 'coaching_app:team_kick' team.pk %}" method="POST">
+                {% csrf_token %}
+                {{ student.user.username }}
+                <button>Kick</button>
+                <input type="hidden" name="student_pk" value="{{ student.pk }}">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <div>Add students to the team</div>
+        {% for studentAdd in studentsAdd %}
+        <div>
+            <form action="{% url 'coaching_app:team_insert' team.pk %}" method="POST">
+                {% csrf_token %}
+                {{ studentAdd.user.username }}
+                <button>Add</button>
+                <input type="hidden" name="student_pk" value="{{ studentAdd.pk }}">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <div>This is the coaches:</div>
+
+        {% for coach in coaches %}
+        <div>
+            <form action="{% url 'coaching_app:team_kick' team.pk %}" method="POST">
+                {% csrf_token %}
+                {{ coach.user.username }}
+                <button>Kick</button>
+                <input type="hidden" name="coach_pk" value="{{ coach.pk }}">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <div>Add coaches to the team</div>
+        {% for coachAdd in coachesAdd %}
+        <div>
+            <form action="{% url 'coaching_app:team_insert' team.pk %}" method="POST">
+                {% csrf_token %}
+                {{ coachAdd.user.username }}
+                <button>Add</button>
+                <input type="hidden" name="coach_pk" value="{{ coachAdd.pk }}">
+            </form>
+        </div>
+        {% endfor %}
+    </div>
+
+    <form action="{% url 'coaching_app:team_delete' team.pk %}" method="POST">
+        {% csrf_token %}
+        <div>Type "DELETE" to delete</div>
+        <input type="text" name="delete" placeholder="DELETE">
+        <button>Delete team</button>
+    </form>
+</body>
+
+</html>
